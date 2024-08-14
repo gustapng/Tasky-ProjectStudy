@@ -13,4 +13,6 @@ enum AssetsConstants {
     static let logo = "logo"
     static let darkPurple = "DarkPurple"
     static let lilac = "Lilac"
+    static let lightGray = "LightGray"
+    static let lightGray2 = "LightGray2"
 }
