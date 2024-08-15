@@ -18,6 +18,8 @@
 		EC3F42802C693BE40036A645 /* UiViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F427F2C693BE40036A645 /* UiViewController+.swift */; };
 		EC3F42832C6941E80036A645 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3F42822C6941E80036A645 /* TasksViewController.swift */; };
 		EC6B7B952C6C1588008F779B /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC6B7B942C6C1588008F779B /* AddTaskViewController.swift */; };
+		ECAED3862C6D7DCA002D3948 /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAED3852C6D7DCA002D3948 /* AlertHelper.swift */; };
+		ECAED3892C6D852D002D3948 /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAED3882C6D852D002D3948 /* TaskRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		EC3F427F2C693BE40036A645 /* UiViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiViewController+.swift"; sourceTree = "<group>"; };
 		EC3F42822C6941E80036A645 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		EC6B7B942C6C1588008F779B /* AddTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewController.swift; sourceTree = "<group>"; };
+		ECAED3852C6D7DCA002D3948 /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
+		ECAED3882C6D852D002D3948 /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,7 @@
 		EC3F42662C6938850036A645 /* Tasky */ = {
 			isa = PBXGroup;
 			children = (
+				ECAED3872C6D851D002D3948 /* Repository */,
 				EC179BBE2C6AD045006A64E4 /* Views */,
 				EC179BBB2C6ACCAE006A64E4 /* Models */,
 				EC3F42812C6941C80036A645 /* ViewControllers */,
@@ -100,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				EC3F427C2C693A4F0036A645 /* Constants.swift */,
+				ECAED3852C6D7DCA002D3948 /* AlertHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -120,6 +126,14 @@
 				EC6B7B942C6C1588008F779B /* AddTaskViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		ECAED3872C6D851D002D3948 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				ECAED3882C6D852D002D3948 /* TaskRepository.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,10 +210,12 @@
 				EC3F42682C6938850036A645 /* AppDelegate.swift in Sources */,
 				EC3F42802C693BE40036A645 /* UiViewController+.swift in Sources */,
 				EC3F426A2C6938850036A645 /* SceneDelegate.swift in Sources */,
+				ECAED3892C6D852D002D3948 /* TaskRepository.swift in Sources */,
 				EC3F427D2C693A4F0036A645 /* Constants.swift in Sources */,
 				EC179BBD2C6ACCBE006A64E4 /* Task.swift in Sources */,
 				EC3F42832C6941E80036A645 /* TasksViewController.swift in Sources */,
 				EC6B7B952C6C1588008F779B /* AddTaskViewController.swift in Sources */,
+				ECAED3862C6D7DCA002D3948 /* AlertHelper.swift in Sources */,
 				EC179BC02C6AD076006A64E4 /* TasksTableViewHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

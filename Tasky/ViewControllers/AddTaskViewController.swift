@@ -9,6 +9,8 @@ import UIKit
 
 class AddTaskViewController: UIViewController {
     
+    weak var delegate: TaskDelegate?
+    
     private lazy var addTaskLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -17,7 +19,7 @@ class AddTaskViewController: UIViewController {
         label.textColor = UIColor(named: AssetsConstants.darkPurple)
         label.textAlignment = .center
         return label
-    }()
+    }()	
     
     private lazy var dismissViewButton: UIButton = {
         let button = UIButton()
@@ -40,6 +42,7 @@ class AddTaskViewController: UIViewController {
     private lazy var titleInput: UITextField = {
         let input = UITextField()
         input.translatesAutoresizingMaskIntoConstraints = false
+        input.placeholder = "Título da tarefa"
         input.font = .systemFont(ofSize: 16, weight: .regular)
         input.backgroundColor = UIColor(named: AssetsConstants.lightGray)
         input.layer.cornerRadius = 5.0
@@ -61,6 +64,7 @@ class AddTaskViewController: UIViewController {
     private lazy var descriptionInput: UITextField = {
         let input = UITextField()	
         input.translatesAutoresizingMaskIntoConstraints = false
+        input.placeholder = "Descrição da tarefa"
         input.font = .systemFont(ofSize: 16, weight: .regular)
         input.backgroundColor = UIColor(named: AssetsConstants.lightGray)
         input.layer.cornerRadius = 5.0
@@ -91,7 +95,17 @@ class AddTaskViewController: UIViewController {
     // MARK: Class methods
     
     @objc func didTapSaveTaskButton() {
-        print("Salvar")
+        guard let title = titleInput.text, !title.isEmpty else {
+            print("Precisa de um título")
+            AlertHelper.showAlert(on: self, title: "Erro", message: "O título da tarefa não pode estar vazio.")
+            return
+        }
+        
+        let newTask = Task(title: title, description: descriptionInput.text)
+        
+        delegate?.didAddTask(newTask: newTask)
+        
+        dismiss(animated: true)
     }
     
     @objc func didTapDismissViewButton() {

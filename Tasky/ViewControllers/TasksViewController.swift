@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol TaskDelegate: AnyObject {
+    func didAddTask(newTask: Task)
+}
+
 class TasksViewController: UIViewController {
         
     private lazy var tasksTableView: UITableView = {
@@ -57,20 +61,44 @@ class TasksViewController: UIViewController {
             tasksTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
+    
+    @objc func didTapCompleteTaskButton(_ sender: UIButton) {
+        guard let cell = sender.superview as? UITableViewCell else {
+            return
+        }
+        guard let indexPath = tasksTableView.indexPath(for: cell) else {
+            return
+        }
+        TaskRepository.shared.completeTask(at: indexPath.row)
+        tasksTableView.reloadRows(at: [indexPath], with: .automatic)
+    }
 }
 
 extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        return TaskRepository.shared.tasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         var content = cell.defaultContentConfiguration()
-        content.text = tasks[indexPath.row].title
-        content.secondaryText = tasks[indexPath.row].description ?? ""
+        content.text = TaskRepository.shared.tasks[indexPath.row].title
+        content.secondaryText = TaskRepository.shared.tasks[indexPath.row].description ?? ""
         cell.contentConfiguration = content
+        cell.accessoryView = createTaskCheckMarkButton(task: TaskRepository.shared.tasks[indexPath.row])
         return cell
+    }
+    
+    private func createTaskCheckMarkButton(task: Task) -> UIButton {
+        let completeButton = UIButton()
+        completeButton.addTarget(self, action: #selector(didTapCompleteTaskButton), for: .touchUpInside)
+        let symbolName = task.isCompleted ? "checkmark.circle.fill" : "checkmark.circle"
+        let configuration = UIImage.SymbolConfiguration(pointSize: 24.0)
+        let image = UIImage(systemName: symbolName, withConfiguration: configuration)
+        
+        completeButton.setImage(image, for: .normal)
+        completeButton.frame = .init(x: 0, y: 0, width: 24.0, height: 24.0)
+        return completeButton
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -83,7 +111,8 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print("Toque no botão delete")
+            TaskRepository.shared.removeTask(at: indexPath.row)
+            tasksTableView.reloadData()
         }
     }
 }
@@ -91,6 +120,14 @@ extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
 extension TasksViewController: TasksTableViewHeaderDelegate {
     func didTapAddTaskButton() {
         let addTaskVC = AddTaskViewController()
+        addTaskVC.delegate = self
         navigationController?.present(addTaskVC, animated: true)
+    }
+}
+
+extension TasksViewController: TaskDelegate {
+    func didAddTask(newTask: Task) {
+        TaskRepository.shared.addTask(newTask: newTask)
+        tasksTableView.reloadData()
     }
 }
